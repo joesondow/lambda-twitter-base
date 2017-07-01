@@ -4,7 +4,15 @@ apply plugin: 'maven'
 group = 'sondow'
 version = '0.0.1-SNAPSHOT'
 
-description = """lambda-twitter-base"""
+description = """\
+Uses AWS Lambda to automate twitter tasks.
+------------------------------------------
+Project version: ${version}
+Gradle version: ${gradle.gradleVersion}
+------------------------------------------
+"""
+
+
 
 sourceCompatibility = 1.5
 targetCompatibility = 1.5
