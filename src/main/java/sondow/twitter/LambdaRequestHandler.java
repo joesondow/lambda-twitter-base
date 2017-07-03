@@ -16,8 +16,8 @@ public class LambdaRequestHandler implements RequestHandler<Object, Object> {
     /*
      * (non-Javadoc)
      *
-     * @see com.amazonaws.services.lambda.runtime.RequestHandler#handleRequest(java. lang.Object,
-     * com.amazonaws.services.lambda.runtime.Context)
+     * @see com.amazonaws.services.lambda.runtime.RequestHandler#handleRequest(java.
+     * lang.Object, com.amazonaws.services.lambda.runtime.Context)
      */
     @Override
     public Object handleRequest(Object input, Context context) {
@@ -28,10 +28,10 @@ public class LambdaRequestHandler implements RequestHandler<Object, Object> {
     }
 
     /**
-     * AWS Lambda only allows underscores in environment variables, not dots, so the default ways twitter4j finds
-     * keys aren't possible. Instead, write your own code that gets the configuration either from Lambda-friendly
-     * environment variables or from a default twitter4j.properties file at the project root, or on the
-     * classpath, or in WEB-INF.
+     * AWS Lambda only allows underscores in environment variables, not dots, so the default
+     * ways twitter4j finds keys aren't possible. Instead, write your own code that gets the
+     * configuration either from Lambda-friendly environment variables or from a default
+     * twitter4j.properties file at the project root, or on the classpath, or in WEB-INF.
      *
      * @return configuration containing Twitter authentication strings
      */
