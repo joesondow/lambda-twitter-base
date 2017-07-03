@@ -15,7 +15,7 @@ import twitter4j.conf.ConfigurationBuilder;
  */
 public class Tweeter {
 
-    private Configuration config;
+    Twitter twitter;
 
     /**
      * Creates an instance to interact with the Twitter accounts the is set up as the default
@@ -32,7 +32,7 @@ public class Tweeter {
      * @param config the Twitter configuration to use to authenticate
      */
     public Tweeter(Configuration config) {
-        this.config = config;
+        twitter = new TwitterFactory(config).getInstance();
     }
 
     /**
@@ -42,7 +42,6 @@ public class Tweeter {
      * @return the full tweet object that was created
      */
     public Status tweet(String message) {
-        Twitter twitter = new TwitterFactory(config).getInstance();
         try {
             Status status = twitter.updateStatus(message);
             String msg = "Successfully tweeted message: " + message + " with status " + status;

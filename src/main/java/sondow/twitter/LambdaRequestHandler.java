@@ -22,7 +22,7 @@ public class LambdaRequestHandler implements RequestHandler<Object, Object> {
     @Override
     public Object handleRequest(Object input, Context context) {
         Configuration config = configure();
-        Tweeter tweeter = new Tweeter(config);
+        Tweeter tweeter = createTweeter(config);
         String message = "";
         return tweeter.tweet(message);
     }
@@ -35,12 +35,12 @@ public class LambdaRequestHandler implements RequestHandler<Object, Object> {
      *
      * @return configuration containing Twitter authentication strings
      */
-    private Configuration configure() {
+    /* package */ Configuration configure() {
         ConfigurationBuilder cb = new ConfigurationBuilder();
-        String consumerKeyEnvVar = System.getenv("twitter4j_oauth_consumerKey");
-        String consumerSecretEnvVar = System.getenv("twitter4j_oauth_consumerSecret");
-        String accessTokenEnvVar = System.getenv("twitter4j_oauth_accessToken");
-        String accessTokenSecretEnvVar = System.getenv("twitter4j_oauth_accessTokenSecret");
+        String consumerKeyEnvVar = getEnvVar("twitter4j_oauth_consumerKey");
+        String consumerSecretEnvVar = getEnvVar("twitter4j_oauth_consumerSecret");
+        String accessTokenEnvVar = getEnvVar("twitter4j_oauth_accessToken");
+        String accessTokenSecretEnvVar = getEnvVar("twitter4j_oauth_accessTokenSecret");
         if (consumerKeyEnvVar != null) {
             cb.setOAuthConsumerKey(consumerKeyEnvVar);
         }
@@ -55,5 +55,29 @@ public class LambdaRequestHandler implements RequestHandler<Object, Object> {
         }
         Configuration config = cb.setTrimUserEnabled(true).build();
         return config;
+    }
+
+    /**
+     * Provides a new Tweeter object.
+     * 
+     * This method is pulled out to make this class easier to unit test with a Spy in Spock.
+     * 
+     * @return the Tweeter that will do the tweeting
+     */
+    /* package */ Tweeter createTweeter(Configuration config) {
+        return new Tweeter(config);
+    }
+
+    /**
+     * Gets an environment variable, or null if there is no such environment variable for the
+     * specified key.
+     * 
+     * This method is pulled out to make this class easier to unit test with a Spy in Spock.
+     * 
+     * @param key the name of the environment variable
+     * @return the value of the environment variable
+     */
+    /* package */ String getEnvVar(String key) {
+        return System.getenv(key);
     }
 }
